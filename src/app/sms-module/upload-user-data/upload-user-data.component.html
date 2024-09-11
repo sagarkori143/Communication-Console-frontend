@@ -1,0 +1,35 @@
+<div class="container" style="position: relative;">
+  <p-toast [life]="2000"></p-toast>
+
+  <div *ngIf="!showTemplatePopup">
+    <h2 style="font-weight: 500;">Select-Users</h2>
+
+    <div class="actions">
+      <!-- <button (click)="fetchUsers()">Fetch Users</button>
+      <button (click)="uploadUsers()">Upload to Server</button> -->
+      <button (click)="importFromCSV()">Import from CSV</button>
+      <button class="send-button" (click)="sendSMS()">Select Template</button>
+    </div>
+
+    <input type="file" id="fileInput" style="display: none;" (change)="onFileSelected($event)" accept=".csv" />
+
+    <div class="ag-theme-alpine" style="height: 500px; width: 100%;">
+      <div style="display: flex;gap: 10px;align-items: center;margin-bottom: 10px;margin-top: 10px;">
+        <p>
+          Search Filter - 
+        </p>
+        <input style="padding: 10px 5px 10px 5px;" type="text" placeholder="Search..." (input)="onQuickFilterChanged($event)" />
+      </div>
+
+      <ag-grid-angular style="width: 100%; height: 100%;" class="ag-theme-quartz" [rowData]="rowData"
+        [columnDefs]="columnDefs" rowSelection="multiple" (gridReady)="onGridReady($event)" [gridOptions]="gridOptions">
+      </ag-grid-angular>
+    </div>
+
+
+  </div>
+
+  <app-template-popup *ngIf="showTemplatePopup" (templateSelected)="handleTemplateSelection($event)"
+    (popupClosed)="showTemplatePopup = false">
+  </app-template-popup>
+</div>
